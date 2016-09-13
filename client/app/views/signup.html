@@ -1,0 +1,64 @@
+<div class="row">
+    <div class="col-sm-5"></div>
+
+    <div class="col-sm-2">
+        <div class="panel login-panel" ng-controller="SignupCtrl">
+
+            <div class="panel-heading">
+                <img src="/images/DeskLogs-Login.png"/>
+            </div>
+            <!-- / .panel-heading -->
+
+            <div class="panel-body">
+                <form class="form-group">
+
+                    <fieldset>
+                        <legend>DeskLog Application Registration</legend>
+                    <!-- SSO -->
+                    <div class="form-group" ng-class="{'has-danger': signup.error.sso}">
+                        <label class="control-label" for="sso">SSO</label>
+                        <input ng-model="signup.user.sso" id="sso" class="form-control input-md"
+                               type="text" name="sso" placeholder="ex. 123456789"/>
+                    </div>
+
+                    <!-- Password -->
+                    <div class="form-group" ng-class="{'has-danger': signup.error.pw1}">
+                        <label class="control-label" for="pw1">Password</label>
+                        <input ng-model="signup.user.pw1" id="pw1" class="form-control input-md"
+                               type="password" name="pw1"/>
+                    </div>
+
+                        <!-- Repeat Password -->
+                        <div class="form-group" ng-class="{'has-danger': signup.error.pw1}">
+                            <label class="control-label" for="pw2">Repeat Password</label>
+                            <input ng-model="signup.user.pw2" id="pw2" class="form-control input-md"
+                                   type="password" name="pw2"/>
+                        </div>
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <button ng-click="signup.submit()" id="login_button" name="login"
+                                    class="btn btn-success btn-block">Login
+                            </button>
+                        </div>
+                    </div>
+                    <!-- / .row -->
+                    </fieldset>
+
+                </form>
+                <!-- / form.form-group -->
+            </div>
+            <!-- / .panel-body -->
+            <div class="panel-footer">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <a href="/#/login" title="Back to login page.">Back to Login</a>
+                    </div>
+                </div>
+            </div><!-- / .panel-footer -->
+        </div>
+        <!-- / .panel ng-controller -->
+    </div>
+    <!-- / .col-sm-2 -->
+    <div class="col-sm-5"></div>
+</div>

@@ -1,0 +1,192 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="This application serves as a way for producers to create and track new stories
+      throughout the system.">
+    <meta name="author" content="Lee Allen <terry.allen@nbcuni.com>">
+
+    <title>NBC News Channel DeskLogs</title>
+
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <!-- build:css(.) styles/vendor.css -->
+    <!-- bower:css -->
+    <link rel="stylesheet" href="bower_components/angular-bootstrap-colorpicker/css/colorpicker.css" />
+    <link rel="stylesheet" href="bower_components/angular-growl-v2/build/angular-growl.css" />
+    <link rel="stylesheet" href="bower_components/angular-hotkeys/build/hotkeys.css" />
+    <!-- endbower -->
+    <!-- endbuild -->
+    <!-- build:css(.tmp) styles/main.css -->
+    <link rel="stylesheet" href="styles/main.css">
+
+    <!-- endbuild -->
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+</head>
+<body ng-app="clientApp">
+    <!--[if lte IE 8]>
+    <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
+        your browser</a> to improve your experience.</p>
+    <![endif]-->
+
+    <!-- Notifications -->
+    <div growl limit-messages="5"></div>
+
+    <!-- Navigation -->
+    <nav ng-controller="NavigationCtrl" class="navbar navbar-inverse navbar-fixed-top" role="navigation" id="navigation-header">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/#/"><img title="NBC News Channel DeskLogs" src="/images/Logo-Small.png"\></a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
+            <ul class="nav navbar-nav navbar-right right-nav">
+
+                <!-- Notifications menu. -->
+
+                <li class="dropdown">
+                    <span class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                          aria-expanded="false">
+                        <i class="fa fa-bell" aria-hidden="true"></i> Notifications <span class="caret"></span>
+                    </span>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="#" ng-click="toggleSound($event)">
+                                <i ng-if="sound" class="fa fa-volume-up green" aria-hidden="true"></i>
+                                <i ng-if="!sound" class="fa fa-volume-off red" aria-hidden="true"></i>
+                                Toggle Sound
+                            </a>
+                        </li>
+
+                        <!--
+                        <li>
+                            <a class="disabled" ng-class="{'disabled': !loggedIn}" href="#">
+                                <i class="fa fa-eye" aria-hidden="true"></i> View Notifications</a>
+                        </li>
+                        -->
+                    </ul>
+                </li>
+
+
+                <!-- Information menu -->
+                <li class="dropdown">
+                    <span href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                          aria-expanded="false">
+                        <i class="fa fa-info-circle" aria-hidden="true"></i> Information <span class="caret"></span>
+                    </span>
+                    <ul class="dropdown-menu">
+                        <li><a class="disabled" href="/#/help"><i class="fa fa-question-circle" aria-hidden="true"></i> Help</a></li>
+                        <li><a href="#" ng-click="launchFeedback($event)"><i class="fa fa-commenting" aria-hidden="true"></i> Send Feedback</a></li>
+                    </ul>
+                </li>
+
+                <!-- Account menu -->
+                <li class="dropdown" ng-class="{'disabled': !loggedIn}">
+                    <span href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                          aria-expanded="false">
+                        <i class="fa fa-user" aria-hidden="true"></i> {{username}} <span class="caret"></span>
+                    </span>
+                    <ul class="dropdown-menu">
+                        <li><a href="/#/login"><i class="fa fa-user" aria-hidden="true"></i> Log Out</a></li>
+                        <li><a href="/#/settings"><i class="fa fa-gear" aria-hidden="true"></i> Account Settings</a></li>
+                        <li ng-if="hasPermission('sudo')">
+                            <a href="/#/admin"><i class="fa fa-gear" aria-hidden="true"></i> Admin Panel</a>
+                        </li>
+                    </ul>
+                </li>
+
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </nav>
+
+    <!-- Page Content -->
+    <div class="container-fluid" ng-view=""></div>
+    <!-- / Page Content -->
+
+    <!-- build:js(.) scripts/vendor.js -->
+    <!-- bower:js -->
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.js"></script>
+    <script src="bower_components/angular-aria/angular-aria.js"></script>
+    <script src="bower_components/angular-cookies/angular-cookies.js"></script>
+    <script src="bower_components/angular-messages/angular-messages.js"></script>
+    <script src="bower_components/angular-resource/angular-resource.js"></script>
+    <script src="bower_components/angular-route/angular-route.js"></script>
+    <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+    <script src="bower_components/angular-touch/angular-touch.js"></script>
+    <script src="bower_components/angular-socket-io/socket.js"></script>
+    <script src="bower_components/HTML5-Desktop-Notifications2/desktop-notify.js"></script>
+    <script src="bower_components/angular-web-notification/angular-web-notification.js"></script>
+    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <script src="bower_components/angular-bootstrap-colorpicker/js/bootstrap-colorpicker-module.js"></script>
+    <script src="bower_components/angular-wysiwyg/dist/angular-wysiwyg.min.js"></script>
+    <script src="bower_components/angular-growl-v2/build/angular-growl.js"></script>
+    <script src="bower_components/angular-hotkeys/build/hotkeys.js"></script>
+    <!-- endbower -->
+    <!-- endbuild -->
+
+    <!-- build:js({.tmp,app}) scripts/scripts.js -->
+    <script src="scripts/app.js"></script>
+    <script src="scripts/controllers/main.js"></script>
+    <script src="scripts/controllers/login.js"></script>
+    <script src="scripts/controllers/signup.js"></script>
+    <script src="scripts/controllers/navigation.js"></script>
+    <script src="scripts/controllers/modal.js"></script>
+    <script src="scripts/controllers/settings.js"></script>
+
+    <script src="scripts/directives/dnddraglog.js"></script>
+    <script src="scripts/directives/dnddropdesk.js"></script>
+    <script src="scripts/directives/dnddroplist.js"></script>
+    <script src="scripts/directives/fullheight.js"></script>
+
+    <script src="scripts/services/authenticate.js"></script>
+    <script src="scripts/services/socket.js"></script>
+    <script src="scripts/services/notifications.js"></script>
+    <script src="scripts/services/sounds.js"></script>
+    <script src="scripts/services/desklogs.js"></script>
+
+    <script src="scripts/filters/capitalize.js"></script>
+    <script src="scripts/filters/removehtml.js"></script>
+    <script src="scripts/filters/initialsfromsso.js"></script>
+    <script src="scripts/controllers/help.js"></script>
+    <script src="scripts/services/admin.js"></script>
+    <script src="scripts/controllers/admin.js"></script>
+    <script src="scripts/services/history.js"></script>
+    <script src="scripts/services/api.js"></script>
+    <script src="scripts/controllers/adminstories.js"></script>
+    <script src="scripts/controllers/adminmonitor.js"></script>
+    <script src="scripts/services/monitor.js"></script>
+    <script src="scripts/filters/namefromsso.js"></script>
+    <script src="scripts/controllers/adminnotifications.js"></script>
+    <script src="scripts/controllers/admindashboard.js"></script>
+    <script src="scripts/controllers/adminusers.js"></script>
+    <script src="scripts/controllers/adminlists.js"></script>
+    <script src="scripts/controllers/adminreports.js"></script>
+    <script src="scripts/filters/getlisttitlefromid.js"></script>
+    <script src="scripts/filters/displaydays.js"></script>
+    <!-- endbuild -->
+
+    <!-- Initiate Websocket -->
+    <script type="text/javascript" src="socket.io/socket.io.js"></script>
+
+</body>
+</html>

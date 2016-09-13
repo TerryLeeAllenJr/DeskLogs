@@ -1,0 +1,15 @@
+<script type="text/ng-template" id="alert.html">
+    <div class="alert" style="background-color:#fa39c3;color:white" role="alert">
+        <div ng-transclude></div>
+    </div>
+</script>
+<uib-alert ng-repeat="alert in alerts.popups"
+           type="{{alert.type}}" close="alerts.closeNotification($index)" dismiss-on-timeout="3000">
+    <div class="col-sm-2 alert-icon"><i class="fa {{alert.icon}}" aria-hidden="true"></i></div>
+    <div class="col-sm-10 alert-body">
+        <span class="title">{{alert.title}}</span>
+        <span class="message">{{alert.msg}}</span>
+        <span class="date">{{alert.date}}</span>
+    </div>
+    <div style="clear:both"></div>
+</uib-alert>

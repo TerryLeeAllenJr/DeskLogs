@@ -1,0 +1,107 @@
+<div class="row admin-panel">
+
+    <div class="col-sm-12">
+
+        <nav class="admin-sidebar" ng-class="{ closed: menuClosed }">
+
+            <ul>
+                <li class="admin-sidebar-heading">
+                    <span>Admin Panel</span>
+                    <i ng-click="toggleMenu()" class="fa fa-bars" aria-hidden="true"></i>
+                </li>
+                <li>
+                    <a ng-class="{active: currentPage == 'dashboard'}"
+                       ng-click="changePage('dashboard', $event)"
+                       href="#"><i class="fa fa-tachometer" aria-hidden="true"></i> Dashboard</a>
+                    <i class="hiddenMenu fa fa-tachometer" aria-hidden="true"
+                            ng-class="{active: currentPage == 'dashboard'}"
+                            ng-click="changePage('dashboard', $event)"></i>
+                </li>
+                <li><a ng-class="{active: currentPage == 'users'}"
+                       ng-click="changePage('users', $event)"
+                       href="#"><i class="fa fa-users" aria-hidden="true"></i> Users</a>
+                    <i class="hiddenMenu fa fa-users" aria-hidden="true"
+                       ng-class="{active: currentPage == 'users'}"
+                       ng-click="changePage('users', $event)"></i>
+                </li>
+                <li><a ng-class="{active: currentPage == 'lists'}"
+                       ng-click="changePage('lists', $event)"
+                       href="#"><i class="fa fa-tasks" aria-hidden="true"></i> Lists </a>
+                    <i class="hiddenMenu fa fa-tasks" aria-hidden="true"
+                       ng-class="{active: currentPage == 'lists'}"
+                       ng-click="changePage('lists', $event)"></i>
+
+                </li>
+                <li><a ng-class="{active: currentPage == 'stories'}"
+                       ng-click="changePage('stories', $event)"
+                       href="#"><i class="fa fa-file-text" aria-hidden="true"></i> Stories</a>
+                    <i class="hiddenMenu fa fa-file-text" aria-hidden="true"
+                       ng-class="{active: currentPage == 'stories'}"
+                       ng-click="changePage('stories', $event)"></i>
+                </li>
+                <li><a ng-class="{active: currentPage == 'reports'}"
+                       ng-click="changePage('reports', $event)"
+                       href="#"><i class="fa fa-line-chart" aria-hidden="true"></i> Reports</a>
+                    <i class="hiddenMenu fa fa-line-chart" aria-hidden="true"
+                       ng-class="{active: currentPage == 'reports'}"
+                       ng-click="changePage('reports', $event)"></i>
+
+                </li>
+                <li>
+                    <a ng-class="{active: currentPage == 'notifications'}"
+                       ng-click="changePage('notifications', $event)"
+                       href="#"><i class="fa fa-comment-o" aria-hidden="true"></i> Notifications</a>
+                    <i class="hiddenMenu fa fa-comment-o" aria-hidden="true"
+                       ng-class="{active: currentPage == 'notifications'}"
+                       ng-click="changePage('notifications', $event)"></i>
+                </li>
+                <li><a ng-class="{active: currentPage == 'status'}"
+                       ng-click="changePage('status', $event)"
+                       href="#"><i class="fa fa-heart" aria-hidden="true"></i> Server Status</a>
+                    <i class="hiddenMenu fa fa-heart" aria-hidden="true"
+                       ng-class="{active: currentPage == 'status'}"
+                       ng-click="changePage('status', $event)"></i>
+                </li>
+            </ul>
+
+        </nav>
+
+        <div class="admin-content-wrapper" ng-class="{closed: menuClosed }">
+            <div ng-controller="AdmindashboardCtrl"
+                 ng-if="currentPage == 'dashboard'"
+                 ng-include="'views/admin/dashboard.html'">
+            </div>
+            <div ng-controller=""
+                 ng-if="currentPage == 'users'"
+                 ng-include="'views/admin/users.html'">
+            </div>
+            <div ng-controller="AdminlistsCtrl"
+                 ng-if="currentPage == 'lists'"
+                 ng-include="'views/admin/lists.html'">
+            </div>
+            <div ng-controller="AdminstoriesCtrl"
+                 ng-if="currentPage == 'stories'"
+                 ng-include="'views/admin/stories.html'">
+            </div>
+            <div ng-controller="AdminreportsCtrl"
+                 ng-if="currentPage == 'reports'"
+                 ng-include="'views/admin/reports.html'">
+            </div>
+            <div ng-controller="AdminnotificationsCtrl"
+                 ng-if="currentPage == 'notifications'"
+                 ng-include="'views/admin/notifications.html'">
+            </div>
+            <div ng-controller="AdminmonitorCtrl"
+                 ng-if="currentPage == 'status'"
+                 ng-include="'views/admin/status.html'">
+            </div>
+        </div>
+
+
+    </div>
+
+</div>
+
+
+
+

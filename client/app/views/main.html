@@ -1,0 +1,244 @@
+<div class="row">
+    <!-- .col-sm-9: Primary panel. -->
+    <div class="col-sm-9">
+
+        <ul class="nav nav-tabs log-nav" id="desklogs-nav">
+            <li ng-repeat="desk in desks"
+                ng-class="{'active':currentDesk == desk.title}"
+                dnd-drop-desk="desk">
+                <a ng-click="selectTab(desk.title, $event);"
+                   data-tab=desk.title href="{{desk.title}}">{{desk.title | capitalize}}
+                        <span class="badge purple"
+                              ng-if="count[desk.title] > 0">{{count[desk.title]}}</span>
+                </a>
+            </li>
+        </ul>
+
+        <div class="panel" id="primaryLogPanel">
+
+
+
+            <div class="panel-body logs" full-height>
+
+
+                <!-- Toolbox Row -->
+                <div class="row toolbox-container">
+                    <div class="col-sm-10">
+                        <ul class="toolbox">
+                            <li ng-click="createLogEntry()"><i class="fa fa-plus" aria-hidden="true"></i>Add Story
+                            </li>
+                            <li ng-click="createListEntry()"><i class="fa fa-plus" aria-hidden="true"></i>Add List
+                            </li>
+                            <li ng-class="{'disabled': !selectedLog._id}" ng-click="editLogEntry()">
+                                <i class="fa fa-pencil" aria-hidden="true"></i>Edit Story
+                            </li>
+                            <li ng-class="{'disabled': !selectedLog._id}" ng-click="deleteLogEntry()">
+                                <i class="fa fa-trash-o" aria-hidden="true"></i>Delete Story
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="col-sm-2">
+                        <div class="input-group datepicker">
+                            <input type="text" class="form-control"
+                                   uib-datepicker-popup="{{datepicker.format}}"
+                                   ng-model="currentDate"
+                                   is-open="datepicker.opened"
+                                   datepicker-options="datepicker.options"
+                                   ng-required="true"
+                                   close-text="Close"
+                                   alt-input-formats="datepicker.altInputFormats"/>
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-default" ng-click="datepicker.open()">
+                                        <i class="fa fa-calendar" aria-hidden="true"></i>
+                                    </button>
+                                </span>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- / Toolbox Row -->
+
+                <!-- List Header -->
+                <table class="list-header">
+                    <thead>
+                    <tr class="list-description">
+                        <td class="itemno">Item #</td>
+                        <td class="slug">Slug</td>
+                        <td class="contributionMethod">Method</td>
+                        <td class="timeIn">In</td>
+                        <td class="timeOut">Out</td>
+                        <td class="txponder">Transponder</td>
+                        <td class="source">Source</td>
+                        <td class="feed">Feed</td>
+                        <td class="format">Format</td>
+                        <td class="wr">WR</td>
+                        <td class="updated">Modified</td>
+                        <td class="details">&nbsp;</td>
+                    </tr>
+                    </thead>
+                </table>
+                <!-- / List Header -->
+                <div class="sticky">
+                    <table class="list" ng-repeat="list in lists[currentDesk]">
+                        <thead>
+                        <tr class="list-heading" dnd-drop-list="list" dnd-current-date="currentDate">
+                            <th colspan="12">
+
+                            <span class="heading">
+                                <span class="list-icons">
+                                    <i ng-if="list.defaultList" title="Default List"
+                                       class="fa fa-flag" aria-hidden="true"></i>
+                                    <i ng-if="list.permanent && !list.defaultList"
+                                       title="Permanent List" class="fa fa-calendar-o"
+                                       aria-hidden="true"></i>
+                                </span>
+
+                                <span class="list-title">{{list.title | capitalize}}</span>
+
+                                <span class="list-controls">
+
+                                    <i class="fa fa-trash-o"
+                                       ng-if="!list.defaultList && hasPermission('deleteList')"
+                                       ng-click="deleteListEntry(list._id)" aria-hidden="true"></i>
+                                    <i class="fa fa-pencil" ng-if="!list.defaultList && hasPermission('editList')"
+                                       ng-click="editListEntry(list)" aria-hidden="true"></i>
+                                    <i ng-if="list.locked === true" class="fa fa-spinner fa-spin fa-fw"></i>
+
+                                </span>
+                            </span>
+                            </th>
+
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        <tr ng-repeat="logId in list.logs"
+                            ng-if="logs.hasOwnProperty(logId)"
+                            dnd-drag-log="logId"
+                            dnd-drag-current-list="list"
+                            dnd-drag-locked="logs[logId].locked"
+                            ng-class="{'highlight': selectedLog._id == logs[logId]._id }"
+                            ng-click="selectLog(logs[logId]._id, list._id)">
+                            <td class="itemno">{{logs[logId].itemno}}</td>
+                            <td class="slug">{{logs[logId].slug}}</td>
+                            <td class="contributionMethod">{{logs[logId].contributionMethod | capitalize}}</td>
+                            <td class="timeIn">{{logs[logId].timeIn}}</td>
+                            <td class="timeOut">{{logs[logId].timeOut}}</td>
+                            <td class="txponder">{{logs[logId].txponder}}</td>
+                            <td class="source">{{logs[logId].source}}</td>
+                            <td class="feed">{{logs[logId].feed}}</td>
+                            <td class="format">{{logs[logId].format}}</td>
+                            <td class="wr">{{logs[logId].wr}}</td>
+                            <td class="updated">{{ logs[logId].updatedAt | date : "H:mm:ss"}}</td>
+                            <td class="details">
+                                <i ng-if="logs[logId].ready == true" title="Ready for Feed"
+                                   class="fa fa-sign-in"></i>
+                                <i ng-if="logs[logId].rnc" title="{{logs[logId].rnc | removeHTML}}"
+                                   class="fa fa-exclamation-circle" aria-hidden="true"></i>
+                                <i ng-if="logs[logId].locked === true" class="fa fa-spinner fa-spin fa-fw"></i>
+                            </td>
+
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- / .col-sm-9: Primary panel -->
+    <!-- .col-sm-3: Details panel -->
+    <div class="col-sm-3 details-column">
+        <div class="panel" id="detailsPanel" full-height>
+            <div class="panel-heading has-toolbox">
+                <ul class="toolbox">
+                    <li ng-class="{'disabled': !selectedLog._id}" ng-click="editLogEntry()">
+                        <i class="fa fa-pencil" aria-hidden="true"></i>Edit Story
+                    </li>
+                    <li ng-class="{'disabled': !selectedLog._id}" ng-click="deleteLogEntry()">
+                        <i class="fa fa-trash-o" aria-hidden="true"></i>Delete
+                    </li>
+                </ul>
+            </div>
+            <div class="panel-body details">
+
+                <div class="row">
+                    <div class="col-sm-12 title">
+                        <h3>{{selectedLog.itemno}} {{selectedLog.slug}}</h3>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6 details">
+                        <p>
+                            <strong>Time In:</strong> {{selectedLog.timeIn}}
+                        </p>
+
+                        <p>
+                            <strong>Time Out:</strong> {{selectedLog.timeOut}}
+                        </p>
+
+                        <p>
+                            <strong>Feed:</strong> {{selectedLog.feed}}
+                        </p>
+
+                        <p>
+                            <strong>Source:</strong> {{selectedLog.source}}
+                        </p>
+                    </div>
+                    <div class="col-sm-6 details">
+                        <p>
+                            <strong>Transponder:</strong> {{selectedLog.txponder}}
+                        </p>
+
+                        <p>
+                            <strong>Format:</strong> {{selectedLog.format}}
+                        </p>
+
+                        <p>
+                            <strong>Writer:</strong> {{selectedLog.wr}}
+                        </p>
+
+                        <p>
+                            <strong>Method:</strong> {{selectedLog.contributionMethod | capitalize}}
+                        </p>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <hr/>
+                    <div class="col-sm-12 notes">
+                        <h4>Rights &amp; Clearances:</h4>
+
+                        <div ng-bind-html="trustHTML(selectedLog.rnc)"></div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <hr/>
+                    <div class="col-sm-12 notes">
+                        <h4>Notes:</h4>
+
+                        <div ng-bind-html="trustHTML(selectedLog.notes)"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-footer">
+                <div class="row">
+                    <div class="col-sm-6 footer-details">
+                        <p ng-if="selectedLog.createdBy">
+                            Created by {{selectedLog.createdBy | nameFromSSO: users}}
+                            <br/>at {{selectedLog.createdAt | date : "h:mm a on MMMM d, yyyy"}}
+                        </p>
+                    </div>
+                    <div class="col-sm-6 footer-details">
+                        <p ng-if="selectedLog.createdBy">
+                            Updated by {{selectedLog.updatedBy | nameFromSSO: users}}
+                            <br/>on {{selectedLog.updatedAt | date : "h:mm a on MMMM d, yyyy"}}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- / .col-sm-3: Details column. -->
+</div>

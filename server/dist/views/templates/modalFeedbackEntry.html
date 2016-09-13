@@ -1,0 +1,63 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="close()">&times;</button>
+        <h4>Feedback</h4>
+        <p>I have spent a lot of time making this application run as smoothly as possible, but there is always the possiblilty
+        that I missed something. Use this form to let me know of any bugs you find, any features or functionality you would
+        like to see added, or to simply let me know how you like the application. <br/>Thanks!<br/>Lee </p>
+    </div>
+    <form id="createSeparator">
+        <div class="modal-body">
+
+            <div class="row">
+
+
+                <div class="col-sm-6">
+                    <fieldset class="form-group">
+                        <label for="type">Feedback Type</label>
+                        <select class="form-control" ng-model="form.type" id="type">
+                            <option value="bug">Bug / Issue</option>
+                            <option value="request">Feature Request</option>
+                            <option value="question">Question</option>
+                            <option value="general">General Feedback</option>
+                        </select>
+                    </fieldset>
+                </div>
+                <div class="col-sm-6">
+                    <fieldset class="form-group">
+                        <label for="subject">Subject</label>
+                        <input type="text" class="form-control" ng-model="form.subject" id="subject"/>
+                    </fieldset>
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12">
+                    <fieldset class="form-group">
+                        <label for="text">Feedback</label>
+                        <wysiwyg textarea-id="text"
+                                 textarea-name="text"
+                                 textarea-menu ="wysiwyg.buttons"
+                                 textarea-class="form-control"
+                                 textarea-height="90px"
+                                 ng-model="form.text"
+                                 textarea-required="false"
+                                 enable-bootstrap-title="true"></wysiwyg>
+                    </fieldset>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-6">
+                    <button ng-click="close()" type="button" class="btn btn-default" >Close</button>
+                </div>
+                <div class="col-sm-6">
+                    <input ng-click="submit()" type="submit" class="form-control btn-success" value="Send Feedback"/>
+                </div>
+            </div>
+
+        </div>
+    </form>
+
+</div>

@@ -1,0 +1,14 @@
+/** Forms **/
+.panel .panel-body {
+  p.error{ color: $nbc-red; }
+}
+div.has-danger{
+  input,
+  select { border-color: $nbc-red; }
+  input,
+  label,
+  select { color: $nbc-red;}
+}
+.log-form {
+  textarea { height: 108px; }
+}

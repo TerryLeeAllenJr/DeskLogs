@@ -1,0 +1,153 @@
+
+<div class="row">
+    <div class="col-sm-12">
+        <uib-tabset type="pills">
+            <!-- Recycle Bin -->
+            <uib-tab heading="Recycle Bin" ng-click="getOrphanedStories()">
+                <!-- Toolbar -->
+                <div class="row">
+                    <div class="col-sm-10">
+                        <ul class="toolbox">
+                            <li ng-click="deleteAllStories()">
+                                <i class="fa fa-trash" aria-hidden="true"></i> Delete All
+                            </li>
+                            <li ng-click="getOrphanedStories()">
+                                <i class="fa fa-refresh"
+                                   ng-class="{'fa-spin' : loading}"
+                                   aria-hidden="true"></i> Refresh
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-sm-2">
+                        <label class="disabled">Search for Deleted Item</label>
+                        <div class="input-group disabled">
+                            <input type="text" class="form-control"/>
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-default" ng-click="">
+                                        <i class="fa fa-search" aria-hidden="true"></i>
+                                    </button>
+                                </span>
+                        </div>
+                    </div>
+                </div>
+                <!-- / Toolbar -->
+                <!-- Table -->
+                <div class="row" style="margin-top:10px;">
+                    <div ng-if="!stories" class="searchMessage"><h3 class="message">No stories were found.</h3></div>
+                    <div class="col-sm-12">
+                        <table class="searchResults table table-bordered">
+                            <thead>
+                            <tr>
+                                <th>Item</th>
+                                <th>Slug</th>
+                                <th>Source</th>
+                                <th>Method</th>
+                                <th>Created</th>
+                                <th>Details</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="(key,story) in stories">
+                                <td>{{story.itemno}}</td>
+                                <td>{{story.slug}}</td>
+                                <td>{{story.source}}</td>
+                                <td>{{story.contributionMethod}}</td>
+                                <td>{{story.createdAt | date : "h:mm a on MMMM d, yyyy"}} by {{story.createdBy | nameFromSSO: users}}</td>
+                                <td class="details">
+                                    <i class="fa fa-trash"
+                                       ng-click="deleteStory(key,story._id)"
+                                       aria-hidden="true"></i>
+                                    <i class="fa fa-file"
+                                       ng-click="restoreStory(key,story._id)"
+                                       aria-hidden="true"></i>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!-- / Table -->
+            </uib-tab>
+            <!-- / Recycle Bin -->
+            <!-- Repeating Stories -->
+            <uib-tab heading="Repeating Stories" ng-click="getRepeatingStories()">
+                <!-- Toolbar -->
+                <div class="row">
+                    <div class="col-sm-10">
+                        <ul class="toolbox">
+                            <li ng-click="createRepeatingStory()">
+                                <i class="fa fa-plus" aria-hidden="true"></i> New Repeating Story
+                            </li>
+                            <li ng-click="getRepeatingStories()">
+                                <i class="fa fa-refresh"
+                                   ng-class="{'fa-spin' : loading}"
+                                   aria-hidden="true"></i> Refresh
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-sm-2">
+                        <label class="disabled">Search Repeating Stories</label>
+                        <div class="input-group disabled">
+                            <input type="text" class="form-control"/>
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-default" ng-click="">
+                                        <i class="fa fa-search" aria-hidden="true"></i>
+                                    </button>
+                                </span>
+                        </div>
+                    </div>
+                </div>
+                <!-- / Toolbar -->
+                <div class="row" style="margin-top:10px;">
+                    <div ng-if="!stories" class="searchMessage"><h3 class="message">No stories were found.</h3></div>
+                    <div class="col-sm-12">
+                        <table class="searchResults table table-bordered">
+                            <thead>
+                            <tr>
+                                <th>Item</th>
+                                <th>Slug</th>
+                                <th>Desk</th>
+                                <th>List</th>
+                                <th>Days</th>
+                                <th>Created</th>
+                                <th>Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="(key,story) in stories">
+                                <td>{{story.itemno}}</td>
+                                <td>{{story.slug}}</td>
+                                <td>{{story.desk | capitalize}}</td>
+                                <td>{{story.list | getListTitleFromId: lists | capitalize}}</td>
+                                <td>{{story.days | displayDays}}</td>
+                                <td>{{story.createdAt | date : "h:mm a on MMMM d, yyyy"}} by {{story.createdBy | nameFromSSO: users}}</td>
+                                <td class="details">
+                                    <i class="fa fa-trash"
+                                       ng-click="deleteRepeatingStory(key,story._id)"
+                                       aria-hidden="true"></i>
+                                    <i class="fa fa-pencil"
+                                       ng-click="editRepeatingStory(key,story)"
+                                       aria-hidden="true"></i>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+
+
+            </uib-tab>
+            <!-- / Repeating Stories -->
+            <!-- All Stories -->
+            <uib-tab heading="All Stories">
+                <h1>All Stories</h1>
+            </uib-tab>
+            <!-- / All Stories -->
+        </uib-tabset>
+    </div>
+</div>
+<!--
+
+
+-->

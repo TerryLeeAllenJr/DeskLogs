@@ -1,0 +1,87 @@
+{
+  "desks": [
+    "incoming",
+    "national",
+    "regional",
+    "specials",
+    "politics",
+    "passed"
+  ],
+  "lists": {
+    "incoming": [
+      { "title": "National",     "rotating": false },
+      { "title": "Politics",     "rotating": false },
+
+      { "title": "Florida",     "rotating": false },
+      { "title": "Great Lakes",     "rotating": false },
+      { "title": "Mid Atlantic",     "rotating": false },
+      { "title": "Midwest",     "rotating": false },
+      { "title": "Northeast",     "rotating": false },
+      { "title": "Pac West",     "rotating": false },
+      { "title": "Southeast",     "rotating": false },
+      { "title": "Texnet",     "rotating": false },
+      { "title": "Consumer",     "rotating": false },
+      { "title": "Medical",     "rotating": false },
+      { "title": "Features",     "rotating": false }
+
+
+    ],
+    "national": [
+      { "title": "0000", "rotating": true },
+      { "title": "0100", "rotating": true },
+      { "title": "0200", "rotating": true },
+      { "title": "0300", "rotating": true },
+      { "title": "0400", "rotating": true },
+      { "title": "0500", "rotating": true },
+      { "title": "0600", "rotating": true },
+      { "title": "0700", "rotating": true },
+      { "title": "0800", "rotating": true },
+      { "title": "0900", "rotating": true },
+      { "title": "1000", "rotating": true },
+      { "title": "1100", "rotating": true },
+      { "title": "1200", "rotating": true },
+      { "title": "1300", "rotating": true },
+      { "title": "1400", "rotating": true },
+      { "title": "1500", "rotating": true },
+      { "title": "1600", "rotating": true },
+      { "title": "1700", "rotating": true },
+      { "title": "1800", "rotating": true },
+      { "title": "1900", "rotating": true },
+      { "title": "2000", "rotating": true },
+      { "title": "2100", "rotating": true },
+      { "title": "2200", "rotating": true },
+      { "title": "2300", "rotating": true },
+      { "title": "2400", "rotating": true }
+    ],
+    "regional": [
+      { "title": "0000", "rotating": true },
+      { "title": "0100", "rotating": true },
+      { "title": "0200", "rotating": true },
+      { "title": "0300", "rotating": true },
+      { "title": "0400", "rotating": true },
+      { "title": "0500", "rotating": true },
+      { "title": "0600", "rotating": true },
+      { "title": "0700", "rotating": true },
+      { "title": "0800", "rotating": true },
+      { "title": "0900", "rotating": true },
+      { "title": "1000", "rotating": true },
+      { "title": "1100", "rotating": true },
+      { "title": "1200", "rotating": true },
+      { "title": "1300", "rotating": true },
+      { "title": "1400", "rotating": true },
+      { "title": "1500", "rotating": true },
+      { "title": "1600", "rotating": true },
+      { "title": "1700", "rotating": true },
+      { "title": "1800", "rotating": true },
+      { "title": "1900", "rotating": true },
+      { "title": "2000", "rotating": true },
+      { "title": "2100", "rotating": true },
+      { "title": "2200", "rotating": true },
+      { "title": "2300", "rotating": true },
+      { "title": "2400", "rotating": true }
+    ],
+    "specials": [],
+    "politics": [],
+    "passed":   []
+  }
+}

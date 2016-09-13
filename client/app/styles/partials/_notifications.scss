@@ -1,0 +1,60 @@
+/** Alerts **/
+.alert-container{
+  position: absolute;
+  width: 20%;
+  bottom:50px;
+  right: 20px;
+  z-index: 9999;
+  .alert {
+    width: 100%;
+    .alert-icon{
+      padding: 0 0 0 0;
+      i { font-size: 3em; }
+    }
+    .alert-body{
+      top: -20px;
+      span {
+        display:block;
+        width: 100%;
+        margin:0;
+
+        &.title{
+          font-size: 1.1em;
+          font-weight: bold;
+        }
+        &.message{}
+        &.date{
+          text-align: right;
+          font-style: italic;
+          font-size: 0.8em;
+        }
+      }
+    }
+  }
+}
+.dropdown.notifications{
+  ul.dropdown-menu{
+    min-width: 200px;
+    padding:0;
+    li{
+      padding: 0;
+      margin:0;
+      &.success .notification-dropdown-header{ background: $brand-success; }
+      &.info .notification-dropdown-header{ background: $brand-info; }
+      &.warning .notification-dropdown-header{ background: $brand-warning; }
+      &.danger .notification-dropdown-header{ background: $brand-danger; }
+      .notification-dropdown-header{
+        padding: 0 5px 0 5px;
+        background: #c3c3c3;
+        color: white;
+        text-shadow: 1px 2px 10px #999999;
+        .notification-dropdown-title{ font-weight:bold;}
+        .notification-dropdown-close{
+          float:right;
+          margin-top: 2px;
+        }
+      }
+      .notification-dropdown-body{ padding: 0 5px; }
+    }
+  }
+}

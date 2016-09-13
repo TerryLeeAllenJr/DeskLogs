@@ -1,0 +1,153 @@
+<div class="row">
+    <div class="col-sm-4">
+        <div class="panel">
+            <div class="panel-heading"><h3><i class="fa fa-user" aria-hidden="true"></i> My Account</h3><hr/></div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <uib-tabset type="pills">
+                            <!-- uib-tab "Profile" -->
+                            <uib-tab heading="Profile">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <!-- My Information -->
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <h4>My Information</h4>
+                                                <ul class="my-info">
+                                                    <li><i class="fa fa-user" aria-hidden="true"></i> {{user.first}} {{user.last}} <span>({{user.sso}})</span></li>
+                                                    <li><i class="fa fa-envelope" aria-hidden="true"></i> {{user.email}}</li>
+                                                    <li><i class="fa fa-phone" aria-hidden="true"></i> {{user.phone}}</li>
+                                                </ul>
+                                                <p class="text-warning">
+                                                    <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                                                    This information is set on the Manage Page and can not be changed
+                                                    here.
+                                                </p>
+                                            </div>
+                                            <!-- Password -->
+                                            <div class="col-sm-6">
+                                                <form>
+                                                    <fieldset>
+                                                        <legend>Change Password</legend>
+                                                        <div class="form-group"
+                                                             ng-class="{'has-danger' : status.error.pw1}">
+                                                            <label for="pw1">New Password</label>
+                                                            <input class="form-control"
+                                                                   ng-model="form.pw1" type="password"
+                                                                   name="pw1" id="pw1"/>
+                                                        </div>
+                                                        <div class="form-group"
+                                                             ng-class="{'has-danger' : status.error.pw2}">
+                                                            <label for="pw2">Repeat New Password</label>
+                                                            <input class="form-control"
+                                                                   ng-model="form.pw2" type="password"
+                                                                   name="pw2" id="pw2"/>
+                                                        </div>
+                                                    </fieldset>
+                                                </form>
+                                            </div>
+                                            <!-- / Password -->
+                                        </div>
+                                        <!-- / My Information -->
+                                        <!-- Desk and Password Change -->
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="form-group">
+                                                    <button type="submit" class="btn btn-success form-control"
+                                                            ng-click="saveAccount()">Save Changes</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- / row -->
+                            </uib-tab>
+                            <!-- / uib-tab "Profile" -->
+                            <!-- uib-tab "Notification Settings" TODO: Build out notification settings. -->
+                            <!--<uib-tab heading="Notification Settings">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <form>
+                                            <fieldset>
+                                                <legend>Notification Settings</legend>
+
+                                                <div class="checkbox">
+                                                    <label>
+                                                        <input ng-model="user.preferences.sound"
+                                                               ng-change="updatePreferences()"
+                                                               value="1"
+                                                               type="checkbox"> Play sounds.
+                                                    </label>
+                                                </div>
+
+                                                <div class="checkbox">
+                                                    <label>
+                                                        <input ng-model="user.preferences.notifyOnDesk"
+                                                               ng-change="updatePreferences()"
+                                                               value="1" type="checkbox"> Notify me when a new story is assigned to my desk.
+                                                    </label>
+                                                </div>
+
+                                                <div class="checkbox">
+                                                    <label>
+                                                        <input ng-model="user.preferences.notifyCreateOnEdit"
+                                                               ng-change="updatePreferences()"
+                                                               value="1" type="checkbox"> Notify me when a story I created has been edited.
+                                                    </label>
+                                                </div>
+
+                                                <div class="checkbox">
+                                                    <label>
+                                                        <input ng-model="user.preferences.notifyModifyOnEdit"
+                                                               ng-change="updatePreferences()"
+                                                               value="1" type="checkbox"> Notify me when a story I last modified has been edited.
+                                                    </label>
+                                                </div>
+
+                                            </fieldset>
+                                        </form>
+                                    </div>
+                                </div>
+                            </uib-tab> -->
+                            <!-- / uib-tab "Notification Settings" -->
+                        </uib-tabset>
+                    </div>
+                </div>
+                <!-- / row -->
+            </div>
+            <div class="panel-footer">
+                <p class="status-message"
+                   ng-class="{'has-error' : status.error.flag}"
+                   ng-bind-html="trustHTML(status.message)"></p>
+            </div>
+        </div>
+    </div>
+    <!-- Statistics panel -->
+    <div class="col-sm-8">
+        <div class="panel">
+            <div class="panel-heading">
+                <h3><i class="fa fa-bar-chart" aria-hidden="true"></i> Statistics</h3><hr/>
+
+                <uib-tabset type="pills">
+                    <uib-tab heading="Created Stories">
+                        <h4>Created Stories</h4>
+                    </uib-tab>
+                    <uib-tab heading="History">
+                        <h4>History</h4>
+                    </uib-tab>
+                </uib-tabset>
+
+
+
+
+            </div>
+            <div class="panel-body">
+
+            </div>
+            <div class="panel-footer"></div>
+        </div>
+    </div>
+    <!-- / Statistics Panel -->
+</div>
+<!-- / .row -->

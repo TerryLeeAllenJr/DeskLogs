@@ -1,0 +1,134 @@
+<div class="row">
+    <div class="col-sm-12">
+
+        <div class="panel">
+            <div class="panel-heading"><h1>NBC News Channel DeskLogs Health Monitor</h1></div>
+            <div class="panel-body">
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="alert alert-info">
+                            <p><i class="fa fa-info-circle" aria-hidden="true"></i>In addition to the metrics provided below, additional information can be found by accessing the
+                                <a title="Netdata Console" target="_blank" href="http://desklogs.nbcnewschannel.tv:19999">Netdata</a>
+                                console.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <uib-tabset type="pills">
+                    <uib-tab heading="Server">
+                        <div class="row">
+                            <h3>System Status</h3>
+                            <!-- System Info -->
+                            <div class="col-lg-2">
+                                <h4>System Info</h4>
+                                <table class="table table-bordered">
+                                    <thead>
+                                    <th>Hostname</th>
+                                    <th>Uptime</th>
+                                    </thead>
+                                    <tbody>
+                                    <td>{{status.system_info.hostname}}</td>
+                                    <td>{{status.system_info.uptime}}</td>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <!-- Load Average -->
+                            <div class="col-lg-3">
+                                <h4>Load Average</h4>
+                                <table class="table table-bordered">
+                                    <thead>
+                                    <th>1 min</th>
+                                    <th>5 min</th>
+                                    <th>15 min</th>
+                                    </thead>
+                                    <tbody>
+                                    <td>{{status.monit.loadavg[0]}}</td>
+                                    <td>{{status.monit.loadavg[1]}}</td>
+                                    <td>{{status.monit.loadavg[2]}}</td>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <!-- Memory Usage -->
+                            <div class="col-sm-2">
+                                <h4>Memory</h4>
+                                <table class="table table-bordered">
+                                    <thead>
+                                    <th>Total Memory</th>
+                                    <th>Free Memory</th>
+                                    </thead>
+                                    <tbody>
+                                    <td>{{status.monit.total_mem}}</td>
+                                    <td>{{status.monit.free_mem}}</td>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                        <hr/>
+                        <div class="row">
+                            <h3>Processor Utilization</h3>
+                            <div class="col-sm-4" ng-repeat="cpu in status.monit.cpu">
+                                <p>{{cpu.model}}</p>
+                                <table class="table table-bordered">
+                                    <thead>
+                                    <th>Speed</th>
+                                    <th>User</th>
+                                    <th>Nice</th>
+                                    <th>System</th>
+                                    <th>Idle</th>
+                                    <th>IRQ</th>
+                                    </thead>
+                                    <tbody>
+                                    <td>{{cpu.speed}}</td>
+                                    <td>{{cpu.times.user}}</td>
+                                    <td>{{cpu.times.nice}}</td>
+                                    <td>{{cpu.times.sys}}</td>
+                                    <td>{{cpu.times.idle}}</td>
+                                    <td>{{cpu.times.irq}}</td>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <hr/>
+                    </uib-tab>
+
+                    <uib-tab heading="Application">
+                        <div class="row">
+                            <h3>Processes</h3>
+                            <div class="col-lg-12" ng-repeat="process in status.processes">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <th>Name</th>
+                                        <th>PID</th>
+                                        <th>CPU</th>
+                                        <th>Memory</th>
+                                        <th>NODE_ENV</th>
+                                        <th>Uptime</th>
+                                        <th>Restarts</th>
+                                    </thead>
+                                    <tbody>
+                                        <td>{{process.name}}</td>
+                                        <td>{{process.pid}}</td>
+                                        <td>{{process.monit.cpu}}</td>
+                                        <td>{{process.monit.memory}}</td>
+                                        <td>{{process.pm2_env.NODE_ENV}}</td>
+                                        <td>{{process.pm2_env.pm_uptime}}</td>
+                                        <td>{{process.pm2_env.unstable_restarts}}</td>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </uib-tab>
+
+                </uib-tabset>
+
+
+
+            </div>
+            <div class="panel-footer"></div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,178 @@
+#!/usr/bin/env node
+
+/**
+ * Module dependencies.
+ */
+
+var logger = require('../logger');
+var q = require('q');
+var deskLogs = require('../modules/deskLogs');
+var mongoose = require('mongoose');
+var db = require('../database');
+var Lists = db.lists;
+var Logs = db.logs;
+var RepeatingLogs = db.repeatingLogs;
+var redis = require('redis');
+
+
+
+logger.debug('DeskLogs Cron running...');
+
+//TODO: Sync to github.
+
+getRepeatingLogs()
+    .then(function(repeatingLogs){
+        return saveRepeatingLogs(repeatingLogs);
+    })
+    .then(function(logList){
+        return sortLogsIntoLists(logList);
+    })
+    .then(function(sorted){
+        return addLogsToLists(sorted);
+    })
+    .then(function(){
+        return updateApplication();
+    })
+    .then(function(){
+        logger.debug('Items have been saved.');
+    })
+    .catch(function(err){ logger.error(err); })
+    .done(function(){ process.exit(); });
+
+
+
+function updateApplication(){
+    var defer = q.defer();
+    var data = {},
+        date = new Date();
+    deskLogs.getLogs(date)
+        .then(function(doc){
+            data.logs = doc;
+            return deskLogs.getLists(date);
+        })
+        .then(function(doc){
+            data.lists = doc;
+            var publisher = redis.createClient();
+            publisher.on('ready',function(){
+                publisher.publish('socket::broadcast', JSON.stringify({msg: 'updateApplication', data: data }));
+                defer.resolve(data);
+            });
+            publisher.on('error',function(err){
+                logger.error(err);
+                defer.reject(err);
+            });
+
+        })
+    return defer.promise;
+}
+
+
+
+function addLogsToLists(newLogs){
+    var defer = q.defer();
+    q.all(newLogs.map(function(list){
+        updateListLogs(list)
+            .then(function(doc){ return doc; })
+            .catch(function(err){
+                defer.reject(err);
+                return defer.promise;
+            });
+    }))
+        .then(function(res){
+            defer.resolve(res);
+        })
+        .catch(function(err){ defer.reject(err); });
+    return defer.promise;
+}
+
+function updateListLogs(list){
+    var defer = q.defer();
+    Lists.findOne({_id: list.listId },'logs',function(err,doc){
+        if (err) { defer.reject(err); }
+        else{
+            list.logs.forEach(function(logId){
+                doc.logs.unshift(mongoose.Types.ObjectId(logId));
+            });
+            Lists.findOneAndUpdate(
+                {_id: list.listId},
+                {logs: doc.logs},
+                {upsert:false, new:true},
+                function(err,savedList){
+                    if(err) { defer.reject(err);}
+                    else{ defer.resolve(savedList); }
+                });
+        }
+    });
+    return defer.promise;
+}
+
+function getRepeatingLogs(){
+    var defer = q.defer();
+    RepeatingLogs.find({},function(err,doc){
+        if(err) { defer.reject(err); }
+        else {
+            // Only get logs from today.
+            var dayMatrix = ['sun','mon','tues','wed','thurs','fri','sat','sun'],
+                date = new Date(),
+                day = dayMatrix[date.getDay()],
+                todaysLogs = [];
+            doc.forEach(function(log){
+                if(log.days[day]) { todaysLogs.push(log); }
+            });
+            defer.resolve(todaysLogs);
+        }
+    });
+    return defer.promise;
+}
+
+function saveRepeatingLogs(logs){
+    var defer = q.defer();
+    q.all(logs.map(function(repeatingLog){ return saveRepeatingLog(repeatingLog); }))
+        .then(function(savedLogs){ defer.resolve(savedLogs); })
+        .catch(function(err){ defer.reject(err); });
+    return defer.promise;
+}
+
+function saveRepeatingLog(repeatingLog){
+    var defer = q.defer();
+    var log = new Logs({
+        activeDate: new Date(),
+        itemno: repeatingLog.itemno,
+        slug: repeatingLog.slug,
+        timeIn: repeatingLog.timeIn,
+        timeOut: repeatingLog.timeOut,
+        source: repeatingLog.source,
+        contributionMethod: repeatingLog.contributionMethod,
+        feed: repeatingLog.feed,
+        format: repeatingLog.format,
+        wr: repeatingLog.wr,
+        txponder: repeatingLog.txponder,
+        notes: repeatingLog.notes,
+        rnc: repeatingLog.rnc,
+        createdBy: '206452688',
+        updatedBy: '206452688'
+    });
+    log.save(function(err,doc){
+        if(err){ defer.reject(err); }
+        else{
+            defer.resolve({ listId: repeatingLog.list, logId: doc._id });
+        }
+    });
+    return defer.promise;
+}
+
+function sortLogsIntoLists(logs){
+    var sorted = {};
+    logs.forEach(function(log){
+        if(!sorted.hasOwnProperty(log.listId)){ sorted[log.listId] = []; }
+        sorted[log.listId].push(log.logId);
+    });
+    var result = [];
+    for(var listId in sorted){
+        result.push({
+            listId: listId,
+            logs: sorted[listId]
+        })
+    }
+    return result;
+}

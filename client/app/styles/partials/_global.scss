@@ -1,0 +1,21 @@
+/** General Styles **/
+body {
+  padding: 80px 0 0 0;
+  background: url('../images/background.jpg');
+  background-size:cover;
+  overflow-x: hidden;
+}
+div img { max-width: 100%; }
+div img { max-width: 100%; }
+
+.browsehappy {
+  margin: 0.2em 0;
+  background: #ccc;
+  color: #000;
+  padding: 0.2em 0;
+}
+
+.disabled {
+  pointer-events: none;
+  opacity: 0.4;
+}

@@ -1,0 +1,64 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="close()">&times;</button>
+        <h4>{{title}}</h4>
+    </div>
+    <form id="createSeparator">
+        <div class="modal-body">
+
+            <div class="row">
+
+                <div class="col-sm-12">
+                    <fieldset class="form-group">
+                        <label for="list-desk">Desk</label>
+                        <select ng-model="form.desk" class="form-control" name="desk" id="list-desk">
+                            <option
+                                    ng-repeat="desk in desks"
+                                    value="{{desk.title}}">{{desk.title | capitalize}}
+                            </option>
+                        </select>
+                    </fieldset>
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12">
+                    <fieldset class="form-group">
+                        <label for="list-title">Title</label>
+                        <input ng-model="form.title" class="form-control" name="title" id="list-title"/>
+                    </fieldset>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12">
+                    <label>Permanent List? </label>
+                    <input ng-model="form.permanent" type="checkbox" val="1" name="permanent"/>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-6">
+                    <button ng-click="close()" type="button" class="btn btn-default" >Close</button>
+                </div>
+                <div class="col-sm-6">
+                    <input ng-click="submit()" type="submit" class="form-control btn-success" value="Save"/>
+                </div>
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <div class="row">
+                <div class="col-sm-10"><p class="error">{{error}}</p></div>
+                <div class="col-sm-1">
+                    <i style="position:relative" ng-if="!panelLocked" ng-click="togglePanelLock()"
+                       class="fa fa-unlock-alt" aria-hidden="true"></i>
+                    <i style="position:relative" ng-if="panelLocked" ng-click="togglePanelLock()"
+                       class="fa fa-lock" aria-hidden="true"></i>
+                </div>
+            </div>
+        </div>
+    </form>
+
+</div>

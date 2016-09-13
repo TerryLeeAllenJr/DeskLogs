@@ -1,0 +1,74 @@
+#!/usr/bin/env node
+
+/**
+ * Module dependencies.
+ */
+
+var color = require('cli-color');
+var Seed  = require('../modules/seed');
+
+if (!process.argv[2]){
+    console.log('You must specify which process to seed. (initApp and/or initFakeLogs)');
+}
+
+process.argv.forEach(function(val,index,array){
+    if (val == 'initApp') {
+        Seed.initApplication()
+            .then(function(msg){
+                console.log(color.green(msg));
+                process.exit();
+            })
+            .catch(function(err){
+                console.log('Could not initialize application: ' + color.red(err));
+                process.exit();
+            });
+
+    }
+    if (val == 'initFakeLogs') {
+        Seed.fakeLogs()
+            .then(function(msg){
+                console.log(color.green(msg));
+                process.exit();
+            })
+            .catch(function(err){
+                console.log('Could not seed the database with fake data: ' + color.red(err));
+                process.exit();
+            });
+    }
+
+    if (val == 'backfill') {
+        Seed.backFillDates()
+            .then(function(msg){
+                console.log(color.green(msg));
+                process.exit();
+            })
+            .catch(function(err){
+                console.log('Could not seed the database with backfilled dates: ' + color.red(err));
+                process.exit();
+            });
+    }
+
+    if (val == 'convert') {
+        Seed.convertNames()
+            .then(function(msg){
+                console.log(color.green(msg));
+                process.exit();
+            })
+            .catch(function(err){
+                console.log('Could not seed the database with backfilled dates: ' + color.red(err));
+                process.exit();
+            });
+    }
+
+    if (val == 'addDates') {
+        Seed.addDates()
+            .then(function(msg){
+                process.exit();
+            })
+            .catch(function(err){
+                process.exit();
+            });
+    }
+
+});
+

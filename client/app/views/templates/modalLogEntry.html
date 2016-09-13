@@ -1,0 +1,220 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="close()">&times;</button>
+        <h4>{{title}}</h4>
+    </div>
+
+    <div class="modal-body">
+        <form id="saveLog" class="log-form">
+            <div class="col-sm-6">
+
+                <div class="row">
+                    <div class="col-sm-4">
+                        <fieldset class="form-group">
+                            <label>List</label>
+                            <select ng-model="form.selectedList"
+                                    ng-options="list._id as (list.title | capitalize) for list in lists[currentDesk]"
+                                    class="form-control" name="format">
+                            </select>
+                        </fieldset>
+                    </div>
+                    <div class="col-sm-4">
+                        <fieldset class="form-group">
+                            <label for="form_itemno">Item Number</label>
+                            <input ng-model="form.itemno"
+                                   class="form-control" type="text" name="itemno" id="form_itemno"/>
+                        </fieldset>
+                    </div>
+                    <div class="col-sm-4">
+                        <fieldset class="form-group">
+                            <label for="form_wr">Writer</label>
+                            <input class="form-control" type="text" name="wr" ng-model="form.wr" id="form_wr"\>
+                        </fieldset>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <fieldset class="form-group">
+                            <label for="form_slug">Slug</label>
+                            <input ng-model="form.slug"
+                                   class="form-control" type="text" name="slug" id="form_slug"/>
+                        </fieldset>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-8">
+                        <fieldset class="form-group">
+                            <label for="contribution-method">Contribution Method</label>
+                            <select class="form-control" ng-model="form.contributionMethod" id="contribution-method">
+                                <option selected="selected" value="Unknown">Unknown</option>
+                                <option value="Apple TV">Apple TV</option>
+                                <option value="Archives">Archives</option>
+                                <option value="Bonded Cellular">Bonded Cellular (Dejero, LiveU...)</option>
+                                <option value="Dropbox">Dropbox</option>
+                                <option value="Email">Email</option>
+                                <option value="FTP">FTP</option>
+                                <option value="Internet">Internet</option>
+                                <option value="Latakoo">Latakoo</option>
+                                <option value="Satellite">Satellite</option>
+                                <option value="Send2NC">Send2NC</option>
+                                <option value="Send This File">Send This File</option>
+                                <option value="Stills">Stills</option>
+                                <option value="Transfer - DC">Transfer - DC</option>
+                                <option value="Transfer - NC">Transfer - NC</option>
+                                <option value="Videoship Stream">Videoship Stream</option>
+                                <option value="We Transfer">We Transfer</option>
+                            </select>
+                        </fieldset>
+                    </div>
+                    <div class="col-sm-4">
+                        <fieldset class="form-group">
+                            <label for="form_from">Source</label>
+                            <input ng-model="form.source"
+                                   class="form-control" type="text" name="form_from" id="form_from"/>
+                        </fieldset>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-4">
+                        <fieldset class="form-group">
+                            <label for="form_timeIn">Time In</label>
+                            <input ng-model="form.timeIn"
+                                   class="form-control" type="text" name="timeIn" id="form_timeIn"/>
+                        </fieldset>
+                    </div>
+                    <div class="col-sm-4">
+                        <fieldset class="form-group">
+                            <label for="form_timeOut">Time Out</label>
+                            <input ng-model="form.timeOut"
+                                   class="form-control" type="text" name="timeOut" id="form_timeOut"/>
+                        </fieldset>
+                    </div>
+                    <div class="col-sm-4">
+                        <fieldset class="form-group">
+                            <label for="form_feed">Feed</label>
+                            <input ng-model="form.feed"
+                                   class="form-control" type="text" name="feed" id="form_feed"/>
+                        </fieldset>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-8">
+                        <fieldset class="form-group">
+                            <label for="form_txponder">
+                                Transponder</label>
+                            <input ng-model="form.txponder"
+                                   class="form-control" type="text" name="tx" id="form_txponder"/>
+                        </fieldset>
+                    </div>
+                    <div class="col-sm-4">
+                        <fieldset class="form-group">
+                            <label for="form_format">Format</label>
+                            <select ng-model="form.format"
+                                    class="form-control" name="format" id="form_format">
+                                <option value="N/A">N/A</option>
+                                <option value="Raw">Raw</option>
+                                <option value="VOSOT">VOSOT</option>
+                                <option value="SOT">SOT</option>
+                                <option value="file">File</option>
+                                <option value="VO/NAT">VO/NAT</option>
+                                <option value="VO/Silent">VO/Silent</option>
+                                <option value="PKG">PKG</option>
+                                <option value="Segment">Segment</option>
+                            </select>
+                        </fieldset>
+                    </div>
+                </div>
+                <div class="row">
+
+                    <div class="col-sm-8">
+                        <div class="input-group datepicker">
+                                <label>Active Date</label>
+                                <input type="text" class="form-control"
+                                    uib-datepicker-popup="{{datepicker.format}}"
+                                    ng-model="form.activeDate"
+                                    is-open="datepicker.opened"
+                                    datepicker-options="datepicker.options"
+                                    ng-required="true"
+                                    close-text="Close"
+                                    alt-input-formats="datepicker.altInputFormats"/>
+                                <span class="input-group-btn" style="top:13px;">
+                                    <button type="button" class="btn btn-default" ng-click="datepicker.open()">
+                                        <i class="fa fa-calendar" aria-hidden="true"></i>
+                                    </button>
+                                </span>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 32px;" class="col-sm-4">
+                        <label>Ready? </label>
+                        <input ng-model="form.ready"
+                               type="checkbox"/>
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="col-sm-6">
+
+                <div class="row">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <fieldset class="form-group">
+                                <label>Rights and Clearances</label>
+                                <wysiwyg textarea-id="form_rnc"
+                                         textarea-name="rnc"
+                                         textarea-menu ="wysiwyg.buttons"
+                                         textarea-class="form-control"
+                                         textarea-height="79px"
+                                         ng-model="form.rnc"
+                                         textarea-required="false"
+                                         enable-bootstrap-title="true"></wysiwyg>
+                            </fieldset>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <fieldset class="form-group">
+                                <label>Notes</label>
+                                    <wysiwyg textarea-id="form_notes"
+                                             textarea-name="notes"
+                                             textarea-menu ="wysiwyg.buttons"
+                                             textarea-class="form-control"
+                                             textarea-height="224px"
+                                             ng-model="form.notes"
+                                             textarea-required="false"
+                                             enable-bootstrap-title="true"></wysiwyg>
+                            </fieldset>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div style="clear:both;" class="modal-footer">
+        <div class="row">
+
+            <div class="col-sm-8">
+                <input ng-click="submit()" type="submit" class="form-control btn-success" value="Save" />
+            </div>
+
+            <div class="col-sm-3">
+                <button style="float:left" type="button" class="btn btn-default" ng-click="close()">Close</button>
+            </div>
+
+            <div class="col-sm-1" style="margin-top:10px;">
+                <i style="position:relative" ng-if="!panelLocked" ng-click="togglePanelLock()"
+                   class="fa fa-unlock-alt" aria-hidden="true"></i>
+                <i style="position:relative" ng-if="panelLocked" ng-click="togglePanelLock()"
+                   class="fa fa-lock" aria-hidden="true"></i>
+            </div>
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,41 @@
+/** Nav Tweaks **/
+.nav.navbar-nav {
+  &.right-nav { margin-right: 10px; }
+  li a,
+  li span.dropdown-toggle {
+    color: #fff;
+    position: relative;
+    display: block;
+    padding: 15px;
+    line-height: 30px;
+  }
+  li.loggedInAs {
+    padding: 5px;
+    text-align: center;
+  }
+  li.dropdown.open ul.dropdown-menu li a{ color: #323232; }
+  i.fa-gear{ color: $nbc-purple; }
+  i.fa-bell { color: $nbc-yellow; }
+  i.fa-commenting,
+  i.fa-user { color: $nbc-green; }
+  i.fa-info-circle,
+  i.fa-question-circle,
+  i.fa-users{ color: $nbc-blue; }
+
+  i.red{ color: $nbc-red; }
+  i.green{ color: $nbc-green; }
+
+}
+i.fa{
+  &.yellow { color: $nbc-yellow; }
+}
+span.badge{
+  @include animate-pop;
+  &.pop{ @include animate-pop-activate()}
+  &.yellow { background: $nbc-yellow;}
+  &.orange { background: $nbc-orange;}
+  &.red    { background: $nbc-red;}
+  &.purple { background: $nbc-purple;}
+  &.blue   { background: $nbc-blue;}
+  &.green  { background: $nbc-green;}
+}
