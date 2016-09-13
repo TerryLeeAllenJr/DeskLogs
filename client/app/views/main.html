@@ -27,7 +27,6 @@
                         <ul class="toolbox">
                             <li ng-click="createLogEntry()"><i class="fa fa-plus" aria-hidden="true"></i>Add Story
                             </li>
-                            <li ng-click="createListEntry()"><i class="fa fa-plus" aria-hidden="true"></i>Add List
                             </li>
                             <li ng-class="{'disabled': !selectedLog._id}" ng-click="editLogEntry()">
                                 <i class="fa fa-pencil" aria-hidden="true"></i>Edit Story
@@ -97,14 +96,7 @@
                                 <span class="list-title">{{list.title | capitalize}}</span>
 
                                 <span class="list-controls">
-
-                                    <i class="fa fa-trash-o"
-                                       ng-if="!list.defaultList && hasPermission('deleteList')"
-                                       ng-click="deleteListEntry(list._id)" aria-hidden="true"></i>
-                                    <i class="fa fa-pencil" ng-if="!list.defaultList && hasPermission('editList')"
-                                       ng-click="editListEntry(list)" aria-hidden="true"></i>
                                     <i ng-if="list.locked === true" class="fa fa-spinner fa-spin fa-fw"></i>
-
                                 </span>
                             </span>
                             </th>
