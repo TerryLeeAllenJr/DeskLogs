@@ -17,7 +17,9 @@ describe('Controller: LoginCtrl', function () {
     });
   }));
 
+    /*
     it('this is a silly test',function() {
 
     });
+    */
 });

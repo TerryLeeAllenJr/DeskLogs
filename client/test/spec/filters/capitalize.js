@@ -11,7 +11,7 @@ describe('Filter: capitalize', function () {
     capitalize = $filter('capitalize');
   }));
 
-  it('should return a string with the first letter capitalized...', function () {
+  it('Take an array of days and return it ', function () {
     var text = 'lee';
     expect(capitalize(text)).toBe('Lee');
   });

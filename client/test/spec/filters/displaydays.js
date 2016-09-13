@@ -11,9 +11,13 @@ describe('Filter: displayDays', function () {
     displayDays = $filter('displayDays');
   }));
 
-  it('should return the input prefixed with "displayDays filter:"', function () {
-    var text = 'angularjs';
-    expect(displayDays(text)).toBe('displayDays filter: ' + text);
+  it('should take an object of days and return a comma delineated list.', function () {
+    var days = {
+        mon: true,
+        tues: true,
+        wed: true
+    };
+    expect(displayDays(days)).toBe('mon,tues,wed');
   });
 
 });

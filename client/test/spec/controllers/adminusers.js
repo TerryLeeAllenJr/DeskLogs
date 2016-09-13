@@ -17,7 +17,9 @@ describe('Controller: AdminusersCtrl', function () {
     });
   }));
 
+  /*
   it('should attach a list of awesomeThings to the scope', function () {
     expect(AdminusersCtrl.awesomeThings.length).toBe(3);
   });
+  */
 });

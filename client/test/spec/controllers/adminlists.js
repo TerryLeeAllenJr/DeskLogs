@@ -17,7 +17,7 @@ describe('Controller: AdminlistsCtrl', function () {
     });
   }));
 
-  it('should attach a list of awesomeThings to the scope', function () {
+  /*it('should attach a list of awesomeThings to the scope', function () {
     expect(AdminlistsCtrl.awesomeThings.length).toBe(3);
-  });
+  });*/
 });
