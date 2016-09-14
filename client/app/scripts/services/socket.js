@@ -10,8 +10,6 @@
 angular.module('clientApp')
     .factory('socket', ['$rootScope', function ($rootScope) {
         var socket = io.connect();
-
-
         var on = function(eventName, cb) { socket.on(eventName, cb); },
             emit = function(eventName, cb) { socket.emit(eventName, cb);};
 

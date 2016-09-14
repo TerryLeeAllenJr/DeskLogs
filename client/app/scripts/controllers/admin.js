@@ -20,11 +20,25 @@ angular.module('clientApp')
         'notifications',
         'deskLogs',
         'hotkeys',
-        function ($rootScope, $scope, $cookieStore, $http, $location, $uibModal, authenticate, socket, notifications, deskLogs, hotkeys) {
+        function (
+            $rootScope,
+                  $scope,
+                  $cookieStore,
+                  $http,
+                  $location,
+                  $uibModal,
+                  authenticate,
+                  socket,
+                  notifications,
+                  hotkeys) {
 
 
             $scope.loading = false;
+            $scope.menuClosed = false;
+            $scope.currentPage = 'dashboard';
+
             // Require the user to be logged in before continuing.
+            // TODO: Create mock for require login.
             authenticate.requireLogin()
                 .then(function (userData) {
                     $rootScope.user = userData;
@@ -38,11 +52,9 @@ angular.module('clientApp')
                     $location.path('/login');                   // If the user can not be authenticated, back to login.
                 });
 
-
-            $scope.menuClosed = false;
-            $scope.currentPage = 'stories';
             $scope.changePage = function (page, e) {
-                e.preventDefault();
+                e = e || null;
+                if(e){ e.preventDefault(); }
                 $scope.currentPage = page;
             };
 
