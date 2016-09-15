@@ -11,9 +11,10 @@ describe('Filter: getListTitleFromId', function () {
     getListTitleFromId = $filter('getListTitleFromId');
   }));
 
+  /*
   it('should return the input prefixed with "getListTitleFromId filter:"', function () {
     var text = 'angularjs';
     expect(getListTitleFromId(text)).toBe('getListTitleFromId filter: ' + text);
-  });
+  }); */
 
 });

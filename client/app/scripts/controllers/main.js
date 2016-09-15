@@ -61,6 +61,25 @@ angular.module('clientApp')
              */
             $scope.log = function (message) { console.info('From template:', message); };
 
+            /**
+             * Calls the deskLogs service to update all local application data. Called both on controller bootstrap
+             * and from the datepicker.
+             */
+            $scope.updateLocalApplicationData = function(){
+                deskLogs.updateLocalApplicationData($scope.currentDate)
+                    .then(function(data){
+                        $scope.desks = data.desks;
+                        $scope.lists = data.lists;
+                        $scope.logs  = data.logs;
+                        $scope.count = data.count;
+                        $scope.users = data.users;
+                        $scope.defaultList = deskLogs.getDefaultList($scope.lists[$scope.currentDesk]);
+                    })
+                    .catch(function(err){
+                        console.error(err);
+                    });
+            };
+
             // Bootstrap the application.
             $scope.selectedLog = angular.copy(config.log);        // Currently selected log.
             $scope.currentDesk = 'incoming';                      // Current "desk" selected.
@@ -96,6 +115,7 @@ angular.module('clientApp')
                 $scope.currentDate = null;
             };
             $scope.today();
+            $scope.updateLocalApplicationData();
 
             // Require the user to be logged in before continuing.
             authenticate.requireLogin()
@@ -108,25 +128,7 @@ angular.module('clientApp')
                     $location.path('/login');                   // If the user can not be authenticated, back to login.
                 });
 
-            /*  Watches the $scope.currentDate variable. Will retrieve the appropriate data from mongo when the date is
-                changed. This will fire at the initial page load due to today() being called as part of the bootstrap
-                routine. This is intentional. */
-            $scope.$watch('currentDate',function(){
-                deskLogs.updateLocalApplicationData($scope.currentDate)
-                    .then(function(data){
-                        $scope.desks = data.desks;
-                        $scope.lists = data.lists;
-                        $scope.logs  = data.logs;
-                        $scope.count = data.count;
-                        $scope.users = data.users;
-                        $scope.defaultList = deskLogs.getDefaultList($scope.lists[$scope.currentDesk]);
-                    })
-                    .catch(function(err){
-                        console.error(err);
-                    });
-            });
-
-            /* Permission TODO: Move to Auth module. */
+            /* Permission */
             /**
              * Checks to see if the user has administrative rights. Looks at the $scope.users.permissions array
              * to see if the provided (string) permissionType is in the array.
@@ -156,7 +158,6 @@ angular.module('clientApp')
              * List modal window for new list item.
              */
             $scope.createListEntry = function(){
-                //$scope.listEntry = {};
                 $scope.listModal = $uibModal.open({
                     animation:true,
                     templateUrl: '../../views/templates/modalListEntry.html',

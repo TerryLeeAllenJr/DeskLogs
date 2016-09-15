@@ -38,7 +38,6 @@ angular.module('clientApp')
             $scope.currentPage = 'dashboard';
 
             // Require the user to be logged in before continuing.
-            // TODO: Create mock for require login.
             authenticate.requireLogin()
                 .then(function (userData) {
                     $rootScope.user = userData;

@@ -42,6 +42,7 @@
                             <input type="text" class="form-control"
                                    uib-datepicker-popup="{{datepicker.format}}"
                                    ng-model="currentDate"
+                                   ng-change="updateLocalApplicationData()"
                                    is-open="datepicker.opened"
                                    datepicker-options="datepicker.options"
                                    ng-required="true"
