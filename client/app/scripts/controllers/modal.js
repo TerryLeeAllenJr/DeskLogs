@@ -8,8 +8,8 @@
  * Controller of the clientApp
  */
 angular.module('clientApp')
-    .controller('ModalCtrl', ['$scope', '$uibModalInstance', 'socket', 'data', 'submit', 'hotkeys',
-        function ($scope, $uibModalInstance, socket, data, submit, hotkeys) {
+    .controller('ModalCtrl', ['$scope', '$uibModalInstance', 'socket', 'data', 'submit', 'hotkeys', 'notifications',
+        function ($scope, $uibModalInstance, socket, data, submit, hotkeys, notifications) {
 
 
             // Datepicker
@@ -66,6 +66,21 @@ angular.module('clientApp')
             };
             $scope.close = function () {
                 $uibModalInstance.dismiss('cancel');
+            };
+
+
+            $scope.stripHTML = function(e){
+                e.preventDefault();
+                var input = e.originalEvent.clipboardData.getData('text/plain');
+                var replace = input ? String(input).replace(/<[^>]+>/gm, '') : '';
+                $scope.form.notes += '<br/>' + replace;
+
+                notifications.createPopup({
+                    type: 'info',
+                    config: {title: 'Text Pasted', ttl: 5000},
+                    text: 'Please note that when pasting text into the notes field, all content is posted to the bottom of the field. Additionally, all formatting has been removed from the original copied text.'
+                });
+
             };
 
             hotkeys.add({
